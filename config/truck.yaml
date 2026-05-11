@@ -1,42 +1,29 @@
-# Truck profile
-# Typical dash cam mounted high on windshield or top-of-cab
-
-vehicle_type: "truck"
-
-# Camera geometry (meters, degrees)
-camera_height: 3.0        # meters above ground
-tilt_angle: 8.0           # degrees down from horizontal (flatter than car)
-fov_horizontal: 100.0     # often wider lens
-
-# Region of Interest for speed tracking
-# Truck: higher viewpoint = hood blocks bottom, horizon is farther
+vehicle_type: truck
+camera_height: 3.0
+tilt_angle: 8.0
+fov_horizontal: 100.0
 roi:
-  y_start: 0.50
+  y_start: 0.5
   y_end: 0.75
-  x_start: 0.10
-  x_end: 0.90
-
-# IPM output size
+  x_start: 0.1
+  x_end: 0.9
 ipm:
   width: 640
   height: 480
-  meters_per_pixel: 0.060
-
-# Lucas-Kanade optical flow parameters
+  meters_per_pixel: 0.079498
 lk_params:
-  winSize: [21, 21]
+  winSize:
+  - 21
+  - 21
   maxLevel: 3
-  criteria: [3, 30, 0.01]
-
-# GoodFeaturesToTrack parameters
+  criteria:
+  - 3
+  - 30
+  - 0.01
 feature_params:
   maxCorners: 120
   qualityLevel: 0.3
   minDistance: 20
   blockSize: 7
-
-# Filter: ignore points that move less than this (pixels/frame)
 min_motion_pixels: 0.8
-
-# Smoothing: moving average window for speed output (frames)
 smoothing_window: 15
