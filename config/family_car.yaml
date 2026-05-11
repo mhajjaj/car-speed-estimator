@@ -1,0 +1,46 @@
+# Family car / sedan profile
+# Typical dash cam mounted behind windshield, center
+
+vehicle_type: "family_car"
+
+# Camera geometry (meters, degrees)
+camera_height: 1.2        # meters above ground
+tilt_angle: 15.0          # degrees down from horizontal
+fov_horizontal: 90.0      # approximate horizontal field of view
+
+# Region of Interest for speed tracking
+# [y_start, y_end] as fraction of frame height (0=top, 1=bottom)
+# Family car: lower-middle of frame where road is clearest
+roi:
+  y_start: 0.45
+  y_end: 0.85
+  x_start: 0.15
+  x_end: 0.85
+
+# IPM output size
+ipm:
+  width: 640
+  height: 480
+  # meters per pixel in the bird's-eye view (estimated)
+  # This gets refined by calibration
+  meters_per_pixel: 0.035
+
+# Lucas-Kanade optical flow parameters
+lk_params:
+  winSize: [21, 21]
+  maxLevel: 3
+  criteria: [3, 30, 0.01]  # cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT
+
+# GoodFeaturesToTrack parameters
+feature_params:
+  maxCorners: 150
+  qualityLevel: 0.3
+  minDistance: 15
+  blockSize: 7
+
+# Filter: ignore points that move less than this (pixels/frame)
+# Helps reject noise and distant features
+min_motion_pixels: 1.0
+
+# Smoothing: moving average window for speed output (frames)
+smoothing_window: 15
