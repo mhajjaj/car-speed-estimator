@@ -1,0 +1,23 @@
+[
+  {
+    "time": 4,
+    "num_vertical_lines": 0,
+    "gaps": [],
+    "mean_gap": null,
+    "std_gap": null
+  },
+  {
+    "time": 8,
+    "num_vertical_lines": 0,
+    "gaps": [],
+    "mean_gap": null,
+    "std_gap": null
+  },
+  {
+    "time": 12,
+    "num_vertical_lines": 1,
+    "gaps": [],
+    "mean_gap": null,
+    "std_gap": null
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "method": "Road Feature Calibration",
+  "description": "Using known dimensions of standardized road markings to infer meters-per-pixel scale",
+  "assumptions": "Japan road marking standards (JIS/Japan Road Association)",
+  "features_analyzed": [
+    {
+      "feature": "60_marking_Standard road",
+      "pixel_height": 144,
+      "pixel_width": 219,
+      "real_height_m": 2.5,
+      "real_width_m": 3.5,
+      "scale_from_height": 0.017361111111111112,
+      "scale_from_width": 0.01598173515981735
+    },
+    {
+      "feature": "60_marking_Expressway",
+      "pixel_height": 144,
+      "pixel_width": 219,
+      "real_height_m": 3.0,
+      "real_width_m": 4.0,
+      "scale_from_height": 0.020833333333333332,
+      "scale_from_width": 0.0182648401826484
+    }
+  ],
+  "scale_summary": {
+    "all_scales": [
+      0.017361111111111112,
+      0.01598173515981735,
+      0.020833333333333332,
+      0.0182648401826484
+    ],
+    "mean_scale": 0.01811025494672755,
+    "median_scale": 0.017812975646879756,
+    "min_scale": 0.01598173515981735,
+    "max_scale": 0.020833333333333332,
+    "std_scale": 0.0017699481252620517,
+    "speed_from_mean": 17.267387735370416,
+    "speed_from_median": 16.9839440758929,
+    "speed_from_min": 15.237931133511387,
+    "speed_from_max": 19.863731656184484
+  }
+}
