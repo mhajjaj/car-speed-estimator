@@ -1,0 +1,41 @@
+# ISUZU FORWARD 4-8t medium-duty truck (refrigerated/box)
+# Typical fleet dashcam mount: mid-windshield, behind rear-view mirror
+# Lens center ~2.2-2.4 m above ground for Forward cab
+
+vehicle_type: "isuzu_forward"
+
+# Camera geometry (meters, degrees)
+camera_height: 2.3        # meters above ground (REALISTIC for Isuzu Forward cab)
+tilt_angle: 8.0          # degrees down from horizontal (same dashcam angle, just lower cab)
+fov_horizontal: 95.0     # typical wide-angle dash cam
+
+# Region of Interest for speed tracking
+roi:
+  y_start: 0.50
+  y_end: 0.78
+  x_start: 0.12
+  x_end: 0.88
+
+# IPM output size
+# mpp scales with camera height at same tilt and same tracking row:
+# mpp_isuzu = mpp_truck * (h_isuzu / h_truck) = 0.0795 * (2.3/3.0) = 0.06095
+ipm:
+  width: 640
+  height: 480
+  meters_per_pixel: 0.06095
+
+# Lucas-Kanade optical flow parameters
+lk_params:
+  winSize: [21, 21]
+  maxLevel: 3
+  criteria: [3, 30, 0.01]
+
+# GoodFeaturesToTrack parameters
+feature_params:
+  maxCorners: 120
+  qualityLevel: 0.3
+  minDistance: 20
+  blockSize: 7
+
+min_motion_pixels: 0.8
+smoothing_window: 15
