@@ -251,7 +251,38 @@ The corrected estimate shifts the violation assessment significantly:
 
 ---
 
-## 10. Limitations and Uncertainties
+## 10. Bridge Slope Consideration
+
+The video was recorded on a bridge, which introduces a potential road-grade (slope) factor.
+
+### 10.1 Why Slope Has Negligible Impact on Reported Speed
+
+| Factor | Explanation |
+|---|---|
+| Camera is **vehicle-mounted** | The dash camera is fixed to the truck chassis. The chassis sits parallel to the local road plane, so the camera tilt θ measured from the video already absorbs any bridge slope. |
+| Methods 1 & 2 measure speed **along the road surface** | This is exactly the quantity that matters for traffic-violation assessment. |
+| Typical bridge grade | Highway bridges are usually **2–4 %** (≈ 1.1°–2.3°). |
+| Correction to horizontal speed | `v_horizontal = v_road × cos(γ)` |
+| cos(2.3°) | = **0.9992** → difference of **0.08 %**, well inside our ±5 % uncertainty band. |
+| Even a steep 10 % grade | cos(5.7°) = 0.995 → **0.5 %** error. |
+
+### 10.2 Where Slope Would Matter
+
+1. **Sharp vertical crest curve** — if the road plane changes significantly within a single frame pair, the flat-road homography assumption breaks momentarily. Over several frames this averages out.
+2. **Externally calibrated camera** — if θ had been measured in a flat parking lot and then applied to the bridge video, the slope angle would directly bias the scale. Our vanishing-point estimation avoided this by inferring θ from the video itself.
+3. **GPS / horizontal map comparison** — if comparing against GPS ground-track speed, a 3 % grade introduces a ~0.05 km/h discrepancy at 60 km/h (negligible).
+
+### 10.3 Method 5 Is Slope-Proof
+
+Lane-marking spacing is specified **along the road surface** (e.g., 6 m, 9 m, or 12 m along the centerline). The time to traverse that distance is independent of whether the road is flat, uphill, or downhill. Therefore Method 5’s estimate is inherently robust to bridge grade.
+
+### 10.4 Conclusion
+
+**No slope correction is applied.** The reported speed of ~57 km/h is the speed along the road surface. Any conversion to horizontal (map) speed would change the result by less than 0.1 km/h for typical bridge grades.
+
+---
+
+## 11. Limitations and Uncertainties
 
 1. **Camera height is estimated, not measured:** The 2.3 m value is plausible for an Isuzu Forward but was not confirmed on-site. Error of ±0.3 m propagates ±13 % into speed.
 2. **Road standard ambiguity for Method 5:** Without ground-truth lane marking measurement, the choice between 6 m, 9 m, and 12 m cycles introduces up to ±33 % systematic error.
@@ -262,7 +293,7 @@ The corrected estimate shifts the violation assessment significantly:
 
 ---
 
-## 11. Recommendations for Validation
+## 12. Recommendations for Validation
 
 | Priority | Action | Impact |
 |---|---|---|
@@ -274,7 +305,7 @@ The corrected estimate shifts the violation assessment significantly:
 
 ---
 
-## 12. Generated Artifacts
+## 13. Generated Artifacts
 
 | File | Description |
 |---|---|
