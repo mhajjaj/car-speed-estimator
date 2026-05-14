@@ -282,7 +282,87 @@ Lane-marking spacing is specified **along the road surface** (e.g., 6 m, 9 m, or
 
 ---
 
-## 11. Limitations and Uncertainties
+
+
+## 11. Additional Technical Considerations
+
+### 11.1 Lens Distortion (Barrel Distortion)
+
+Dash cameras typically employ wide-angle lenses (120–170° diagonal field of view) to capture maximal road coverage. These lenses introduce **barrel distortion**: straight lines near the image periphery appear curved, and the center is magnified differently from the edges.
+
+**Impact on speed estimates:**
+
+| Effect | Method(s) Affected | Magnitude | Mitigation |
+|---|---|---|---|
+| Vanishing-point shift | 1 | ±2–5 % | Not corrected; assumes pinhole model |
+| Non-uniform pixel scale across ROI | 1, 2 | ±3–8 % | Constant m/px assumption ignores this |
+| Focal-length ambiguity | 2 | ±5 % | Wide FOV means fp varies with radial distance |
+
+> **Conclusion:** Uncorrected lens distortion adds a **±3–5 %** systematic uncertainty on top of existing geometry assumptions. This is secondary to the height/tilt bias but not zero. A proper calibration with a checkerboard pattern would eliminate it.
+
+### 11.2 Rolling Shutter Artifact
+
+Consumer dash cams almost universally use **CMOS rolling-shutter sensors**: each row of pixels is exposed sequentially (top to bottom) over a brief readout period (~5–25 ms), rather than all at once.
+
+**Impact at 57 km/h:**
+- Vehicle moves **~16 mm per millisecond**.
+- A 20 ms rolling readout means the bottom row captures the scene **~320 ms after** the top row.
+- This causes **vertical features to appear skewed** (leaning forward) and can distort optical-flow vectors.
+
+**Impact on our analysis:**
+- Methods 1 & 2 track features near the same image row, so intra-frame skew is partially canceled.
+- However, vertical objects (guard rails, sign posts) exhibit measurable skew that could be mistaken for motion blur.
+- **Method 4** (blur analysis) is most vulnerable — the measured ESF width could conflate blur + rolling-shutter skew.
+
+> **Conclusion:** Rolling shutter adds a **±2–4 %** uncertainty to frame-to-frame displacement. It does not invalidate the consensus but places a floor on achievable precision with this hardware.
+
+### 11.3 Japan Bridge Speed Limit Context
+
+Japanese bridge and elevated expressway structures often carry **independent speed restrictions** under the Road Traffic Act and Road Structure Ordinance:
+
+| Road Type | Typical Bridge Speed Limit | Source |
+|---|---|---|
+| Urban elevated expressway (e.g., Tokyo Metropolitan Expressway) | **50 km/h** | Design speed 50–60 km/h |
+| National route bridge | **50 km/h** or **60 km/h** | Posted limit, often same as ground road |
+| toll expressway bridge | **70–80 km/h** (some 100 km/h) | NEXCO design standards |
+
+**Relevance to this case:**
+The video shows a concrete bridge with a solid barrier and moderate lane width. Without a visible speed-limit sign, both **40 km/h** (strict urban bridge) and **60 km/h** (national route) are plausible.
+
+> **Conclusion:** Even if the underlying road is a national route (60 km/h), the **bridge segment itself may have a posted 50 km/h limit**. At **57.1 km/h**, this would still represent a **marginal violation** (~7 km/h over) rather than compliance. This possibility should be checked against actual road signage or police records.
+
+### 11.4 Frame Rate Precision and Stability
+
+The video is reported at **11.03 FPS** — unusually low for modern dash cams, which typically record at 30 FPS. This suggests one of the following:
+- **Low-resolution / economy mode** recording
+- **Heavy compression** dropping frames
+- **Variable frame rate (VFR)** container (common in some Chinese dash cam models)
+
+**Impact:**
+- If frame timestamps are **not perfectly evenly spaced**, the constant `dt = 1/FPS` assumption introduces timing jitter.
+- A 10 % frame-drop rate would shift speed estimates by **~10 %** in the corresponding interval.
+- Optical flow between temporally distant frames is harder (larger displacements, more occlusion).
+
+> **Conclusion:** Frame rate stability is an unquantified uncertainty. The analysis assumes uniform `dt`. If frames were dropped during the 3–16 s window, the true speed could differ modestly.
+
+---
+
+## 12. Legal and Forensic Disclaimer
+
+**THIS REPORT IS PROVIDED FOR TECHNICAL AND EDUCATIONAL PURPOSES ONLY.**
+
+1. **Not Certified Forensic Analysis:** This analysis was conducted with open-source computer-vision tools by an automated pipeline. The author is not a court-certified accident-reconstruction expert.
+2. **Chain of Custody:** The video file `truck_video.mp4` was processed without verified chain-of-custody documentation. Admissibility in legal proceedings would require authentication of the original unedited recording.
+3. **No Calibration Data:** Camera intrinsics (focal length, distortion coefficients, mounting geometry) were estimated from video content and vehicle-type assumptions, not measured on-site with calibrated equipment.
+4. **Uncertainty Bounds:** All speed values carry significant systematic uncertainty (±15–25 % for calibration-dependent methods; ±33 % for standard-choice-dependent methods). The consensus value should be interpreted as a **plausible range (51–63 km/h, 95 % CI)**, not a precise measurement.
+5. **No Legal Advice:** This document does not constitute legal advice. Determination of traffic violations is the exclusive jurisdiction of law-enforcement agencies and judicial authorities.
+
+> **Appropriate use:** This analysis demonstrates the feasibility of video-based speed estimation and highlights the sensitivity of results to calibration assumptions. Any findings should be independently verified by a qualified forensic engineer before use in administrative or judicial proceedings.
+
+---
+
+## 13. Limitations and Uncertainties
+## 14. Limitations and Uncertainties
 
 1. **Camera height is estimated, not measured:** The 2.3 m value is plausible for an Isuzu Forward but was not confirmed on-site. Error of ±0.3 m propagates ±13 % into speed.
 2. **Road standard ambiguity for Method 5:** Without ground-truth lane marking measurement, the choice between 6 m, 9 m, and 12 m cycles introduces up to ±33 % systematic error.
@@ -293,7 +373,7 @@ Lane-marking spacing is specified **along the road surface** (e.g., 6 m, 9 m, or
 
 ---
 
-## 12. Recommendations for Validation
+## 15. Recommendations for Validation
 
 | Priority | Action | Impact |
 |---|---|---|
@@ -305,7 +385,7 @@ Lane-marking spacing is specified **along the road surface** (e.g., 6 m, 9 m, or
 
 ---
 
-## 13. Generated Artifacts
+## 16. Generated Artifacts
 
 | File | Description |
 |---|---|

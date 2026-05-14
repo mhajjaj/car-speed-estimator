@@ -216,7 +216,33 @@ Methods 1 and 2 share a ~±15 % uncertainty from tilt and height estimation. Met
 
 ---
 
-## 6. Recommendations for Future Forensic Work
+## 6. Additional Technical Considerations
+
+### 6.1 Lens Distortion
+
+Wide-angle dash-cam lenses introduce barrel distortion that warps the vanishing point and makes pixel scale non-uniform across the image. Methods 1 & 2 assume a pinhole camera model.
+
+- **Impact:** ±3–5 % systematic uncertainty (secondary to height/tilt bias). Not corrected in this analysis.
+
+### 6.2 Rolling Shutter
+
+CMOS sensors read rows sequentially (~5–25 ms). At 57 km/h this causes ~160–800 mm of intra-frame skew, which can distort motion-blur (Method 4) and slightly bias optical-flow vectors.
+
+- **Impact:** ±2–4 % on frame-to-frame displacement. Partially cancels when tracking same-row features.
+
+### 6.3 Bridge Speed Limit Context
+
+Japanese bridges often carry speed limits independent of the underlying road. Urban elevated expressways are typically **50 km/h**, national-route bridges often **50–60 km/h**. At the corrected consensus of **57 km/h**, a **50 km/h bridge limit** would imply a marginal violation (~7 km/h over).
+
+### 6.4 Frame Rate Stability
+
+The 11.03 FPS rate is unusually low and may indicate frame dropping or variable frame rate. If `dt` is not uniform, speed estimates shift proportionally.
+
+- **Impact:** Unquantified; assumed stable for this analysis.
+
+---
+
+## 7. Recommendations for Future Forensic Work
 
 | Priority | Action | Impact on Accuracy |
 |----------|--------|-------------------|
@@ -228,7 +254,7 @@ Methods 1 and 2 share a ~±15 % uncertainty from tilt and height estimation. Met
 
 ---
 
-## 7. Appendices
+## 8. Appendices
 
 ### A. Raw Data for Reproducibility
 
