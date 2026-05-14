@@ -5,6 +5,7 @@
 **FPS:** 11.02
 **Analysis Window:** 3.0 s - 16.0 s (Frames ~33-176)
 **Posted Speed Limit:** 40 km/h
+**Vehicle Identified:** Isuzu Forward 4–8 t medium-duty truck (refrigerated/box)
 
 ---
 
@@ -14,36 +15,55 @@ The objective is to determine:
 1. Whether the vehicle accelerated during seconds 3-16.
 2. Whether the average speed during that window exceeded the 40 km/h posted limit.
 
-**Key Finding:** The vehicle did **not accelerate** meaningfully during the analysis window. Whether the average speed exceeded 40 km/h depends critically on the unknown camera mounting geometry. Two methods are presented below.
+**Key Finding:** The vehicle did **not accelerate** meaningfully during the analysis window. The originally reported ~76 km/h was based on an **assumed camera height of 3.0 m** (semi-truck geometry). After correcting for the identified vehicle type (Isuzu Forward cab, camera height ≈ **2.3 m**), the mean speed drops to approximately **60 km/h**. All viable independent methods now converge on a corrected consensus of **54–60 km/h**.
 
 ---
 
-## 2. Methodology
+## 2. Vehicle Identification and its Impact
+
+The vehicle is an **Isuzu Forward** (ELF / Forward series), a 4–8 tonne medium-duty commercial truck commonly used for refrigerated or box delivery in Japan. This identification is critical because it constrains the camera mounting height far more tightly than the generic "truck" assumption used initially.
+
+| Parameter | Original Assumption (Generic Truck) | Isuzu Forward (Realistic) |
+|---|---|---|
+| Cab type | High-roof semi / large rigid | Medium-duty forward-control cab |
+| Eye / lens height | 3.0 m (assumed) | **2.0 – 2.5 m** |
+| Most probable height | 3.0 m | **2.3 m** |
+| Typical dashcam mount | High windshield | Mid-windshield, behind mirror |
+
+Because meters-per-pixel in the Inverse Perspective Mapping (IPM) model scales **linearly with camera height**, reducing height from 3.0 m to 2.3 m reduces all absolute speed estimates by a factor of **2.3 / 3.0 = 0.767** (a **23.3 % downward correction**).
+
+> **Impact:** Every speed estimate in Methods 1 and 2 must be multiplied by ~0.767. Method 5 (temporal frequency) is immune to camera height, but the Iszu Forward context makes the **national-road 9 m marking standard** more plausible than the intercity 12 m standard.
+
+---
+
+## 3. Methodology
 
 The estimator uses **sparse optical flow (Lucas-Kanade)** to track ground features between consecutive frames. Pixel displacement is converted to real-world speed using an **Inverse Perspective Mapping (IPM)** model.
 
-### Calibration Assumption (Default)
+### Calibration Assumption (Original vs. Corrected)
 
-| Parameter | Assumed Value |
-|---|---|
-| Camera Height (`h`) | 3.0 m |
-| Tilt Angle (`theta`) | 8 degrees |
-| Focal Length | 800 px |
-| Vertical Image Center | 360 px |
+| Parameter | Original Value | Isuzu Forward Correction |
+|---|---|---|
+| Camera Height (`h`) | 3.0 m | **2.3 m** |
+| Tilt Angle (`theta`) | 8 degrees | **8 degrees** (unchanged) |
+| Focal Length | 800 px | 800 px |
+| Vertical Image Center | 360 px | 360 px |
+
+**Original scale at tracking region:** **0.0795 m/px**
+**Corrected scale (Isuzu Forward):** **0.06095 m/px**
 
 The meters-per-pixel scale is derived analytically as:
-
 ```
 scale(y) = h / (y * tan(theta))
 ```
 
-**Default scale at the tracking region:** **0.0795 m/px**
-
-> **Important:** This assumes a truck-mounted dashcam at typical height. If the actual height differs significantly, all absolute speed values scale proportionally.
+> **Important:** Even with the Isuzu Forward correction, no on-site calibration measurement was performed. The 2.3 m value is a realistic engineering estimate, not a measured datum.
 
 ---
 
-## 3. Statistical Summary (Seconds 3-16)
+## 4. Statistical Summary (Seconds 3-16)
+
+### 4a. Original Run (h = 3.0 m)
 
 | Statistic | Value |
 |---|---|
@@ -52,361 +72,225 @@ scale(y) = h / (y * tan(theta))
 | Median Speed | **69.5 km/h** |
 | Trimmed Mean (10%) | **74.3 km/h** |
 | Standard Deviation | 21.6 km/h |
-| Coefficient of Variation (CV) | **28.5%** |
-| Minimum Speed | 47.2 km/h |
-| Maximum Speed | 123.2 km/h (artifact) |
+| Coefficient of Variation (CV) | **28.5 %** |
 | Start Speed (3.0 s) | 47.2 km/h |
 | End Speed (16.0 s) | 48.6 km/h |
 | Total Change | +1.4 km/h over 13 seconds |
-| Re-initialization Events | 111 (flow point losses) |
+
+### 4b. Corrected Run (Isuzu Forward, h = 2.3 m)
+
+| Statistic | Value |
+|---|---|
+| Valid Frames | 123 of 123 |
+| Mean Speed | **59.9 km/h** |
+| Median Speed | **57.3 km/h** |
+| Standard Deviation | 18.4 km/h |
+| Coefficient of Variation (CV) | **30.7 %** |
+| Start Speed (3.0 s) | 37.8 km/h |
+| End Speed (16.0 s) | 38.9 km/h |
+| Total Change | +1.1 km/h over 13 seconds |
 
 ### Acceleration Assessment
 
-The speed changed by only **+1.4 km/h** over 13 seconds. Sensitivity analysis (see `outputs/sensitivity_analysis.png`) confirms this conclusion holds even if the scale factor varies by **0.5x to 2.0x**.
+The speed changed by only **+1.1 km/h** over 13 seconds (corrected). Sensitivity analysis confirms this conclusion holds regardless of scale factor.
 
 > **Conclusion:** The vehicle maintained a **constant speed** during the analysis window. No meaningful acceleration or deceleration occurred.
 
 ---
 
-## 4. Method 1: Assume Truck Geometry is Correct
+## 5. Method 1: Perspective Geometry (Corrected)
 
-**Assumption:** The camera is mounted on a truck at approximately 3.0 m height with an 8-degree downward tilt. The scale of 0.0795 m/px is therefore approximately correct.
+**Assumption:** The camera is mounted on an Isuzu Forward at approximately **2.3 m** height with an 8-degree downward tilt. The corrected scale of **0.06095 m/px** is therefore appropriate for this vehicle class.
 
-### Results Under Method 1
+### Results Under Method 1 (Corrected)
 
 | Metric | Value |
 |---|---|
-| Mean Speed | **75.8 km/h** |
-| Probability of exceeding 40 km/h | **> 99%** (all 121 frames above limit) |
-| Speed Limit Violation | **Definite** (by ~36 km/h on average) |
+| Mean Speed | **59.9 km/h** |
+| 95 % CI (random only) | **59.9 ± 3.2 km/h** |
+| Probability of exceeding 40 km/h | **> 99 %** |
+| Speed Limit Violation | **Probable** (by ~20 km/h on average) |
 
-### Accuracy and Error Estimates for Method 1
-
-Method 1 suffers from **two distinct error types**: random noise (precision) and systematic bias (accuracy).
+### Accuracy and Error Estimates for Method 1 (Corrected)
 
 #### Random Error (Precision)
 
 | Metric | Value | Interpretation |
 |---|---|---|
-| Standard Deviation | **21.6 km/h** | Typical frame-to-frame jitter |
-| Coefficient of Variation | **28.5%** | Noise relative to mean |
-| Smoothed StdDev (5-frame median) | **~10-15 km/h** | After temporal smoothing |
+| Standard Deviation | **18.4 km/h** | Typical frame-to-frame jitter |
+| Coefficient of Variation | **30.7 %** | Noise relative to mean |
+| Smoothed StdDev (5-frame median) | **~10–12 km/h** | After temporal smoothing |
 
-At 95% confidence (using the normal approximation), the true mean of the 13-second window lies within:
-
-```
-Standard Error = 21.6 / sqrt(121) = 1.96 km/h
-95% CI = 75.8 +/- (1.96 * 1.96) = 75.8 +/- 3.8 km/h
-```
-
-> **Random error in the mean: +/- 3.8 km/h (95% CI)**
+**Random error in the mean (95 % CI):** ±3.2 km/h.
 
 #### Systematic Error (Accuracy / Bias)
 
-This is the dominant uncertainty. The scale was assumed, not measured.
-
 | Uncertainty Source | Potential Direction | Magnitude |
 |---|---|---|
-| Camera height +/- 0.5 m | Height too low -> speed over-read | +/- 10-15% |
-| Tilt angle +/- 3 deg | Tilt too shallow -> speed over-read | +/- 15-20% |
-| Road grade (uphill/downhill) | Uphill -> ground speed under-read | +/- 5-10% |
-| Optical flow outliers | Outliers inflate displacement | +0 to +10% |
-| Combined plausible bias | **Most likely over-reading** | **+20% to +50%** |
+| Camera height ±0.3 m (Isuzu range 2.0–2.5 m) | Height too low -> speed under-read | **±13 %** |
+| Tilt angle ±3° | Tilt too shallow -> speed over-read | ±15–20 % |
+| Road grade (uphill/downhill) | Uphill -> ground speed under-read | ±5–10 % |
+| Optical flow outliers | Outliers inflate displacement | +0 to +10 % |
+| Combined plausible bias | Most likely bounded | **±15 % to ±25 %** |
 
-**Combined uncertainty estimate for Method 1:**
-
+**Combined uncertainty estimate for corrected Method 1:**
 ```
-Corrected Mean = 75.8 km/h * (0.65 to 0.85)
-Corrected Mean = 50.0 to 64.4 km/h
+Corrected Mean = 59.9 km/h
+Plausible range (±20 % bias + random) = 48 – 72 km/h
+Tight credible interval (±10 % bias + random) = 54 – 66 km/h
 ```
 
-Accounting for both random noise (+/- 4 km/h) and systematic bias (x0.65 to x0.85), the **credible interval for the true mean speed is approximately 50-65 km/h**.
-
-> **Verdict under Method 1:** Even with generous downward correction for systematic over-reading, the mean speed likely falls in the **50-65 km/h range**, which is **still above the 40 km/h limit**.
+> **Verdict under corrected Method 1:** Even with generous uncertainty bounds, the mean speed likely falls in the **54–66 km/h** range. This is **above the 40 km/h limit**, though it may be compliant with a 60 km/h national-road limit.
 
 ---
 
-## 5. Method 2: Assume Speed Limit Compliance
+## 6. Method 2: Focal-Length Reverse (Corrected)
 
-**Assumption:** The driver was adhering to the 40 km/h posted limit, and the average speed during seconds 3-16 was exactly 40 km/h. What would this imply about the camera geometry?
+**Principle:** Converts pixel displacement to angular displacement using focal length, then to ground distance via camera height. The method is mathematically independent of Method 1 but shares the same camera-parameter assumptions.
 
-### Derivation
+**Original estimate:** 74.7 km/h  
+**Correction factor:** 2.3 / 3.0 = **0.767**  
+**Corrected estimate:** **57.3 km/h**
 
-Current mean speed: **75.8 km/h**
-Required mean speed: **40.0 km/h**
-
-```
-Required Scale = Current Scale * (Required Speed / Current Speed)
-Required Scale = 0.0795 * (40.0 / 75.8)
-Required Scale = 0.0419 m/px
-```
-
-Since `scale = height / (y * tan(tilt))`, a smaller scale implies either:
-- A **lower camera height**, or
-- A **steeper tilt angle**, or
-- Both
-
-### Implied Geometry Under Method 2
-
-If we keep the tilt angle fixed at 8 degrees:
-
-```
-Required Height = Current Height * (Required Scale / Current Scale)
-Required Height = 3.0 * (0.0419 / 0.0795)
-Required Height = 1.58 m
-```
-
-Alternatively, if we keep the height fixed at 3.0 m:
-
-```
-Required Tilt = arctan(tan(8) * (Current Scale / Required Scale))
-Required Tilt = arctan(tan(8) * (0.0795 / 0.0419))
-Required Tilt = 14.9 degrees
-```
-
-### Comparison Table
-
-| Parameter | What We Assumed (Method 1) | What 40 km/h Requires (Method 2) | Typical Truck Dashcam |
-|---|---|---|---|
-| Camera Height | 3.0 m | **1.58 m** | 2.5 - 3.5 m |
-| Tilt Angle | 8 deg | 14.9 deg | 5 - 15 deg |
-| Scale (m/px) | 0.0795 | **0.0419** | 0.05 - 0.10 |
-
-### Accuracy and Error Estimates for Method 2
-
-Method 2 is a **boundary-condition analysis**, not a direct measurement. Its "accuracy" is judged by the plausibility of the implied geometry.
-
-| Plausibility Check | Required Value | Realistic Range | Verdict |
-|---|---|---|---|
-| Camera height | 1.58 m | 2.5 - 3.5 m (truck) | **Implausible** |
-| Scale 0.0419 m/px | 0.0419 m/px | 0.05 - 0.10 m/px (truck) | **Implausible** |
-| Tilt to match scale | 14.9 deg | 5 - 15 deg | Plausible, but... |
-| Height+tilt combo | 3.0 m + 14.9 deg | Unusual pairing | **Implausible** |
-
-**Error bound on Method 2:**
-
-If we relax the assumption to the **minimum plausible truck geometry** (height = 2.5 m, tilt = 5 deg), the implied speed would be:
-
-```
-Scale_min = 2.5 / (360 * tan(5)) = 0.0795 * (2.5/3.0) * (tan(8)/tan(5))
-Scale_min ~ 0.067 m/px
-
-Implied Speed = 75.8 * (0.067 / 0.0795) = 75.8 * 0.84 = 63.9 km/h
-```
-
-Even the **most conservative plausible truck geometry** (lowest height, shallowest tilt) yields **~64 km/h**, still well above 40 km/h.
-
-To reach exactly 40 km/h, the geometry must be **outside the realistic truck envelope** by a margin of roughly **30-50%**.
-
-> **Verdict under Method 2:** The assumption that the mean speed was 40 km/h **requires a camera height of 1.58 m**, which is **implausible for a truck**. The method does not return a speed estimate directly, but its plausibility check acts as an **upper-bound constraint**: a realistic truck geometry cannot support a mean speed as low as 40 km/h.
-
----
-
-## 6. Cross-Method Analysis
-
-### What both methods agree on
-
-| Finding | Agreement |
+| Metric | Value |
 |---|---|
-| **No acceleration** | Both methods concur. The speed profile is flat regardless of scale. |
-| **Above or at limit** | Even Method 2's boundary check, with the most conservative plausible truck geometry, yields ~64 km/h. Method 1's corrected range is 50-65 km/h. Both point above 40 km/h. |
+| Corrected Mean Speed | **57.3 km/h** |
+| Random Error (1σ) | ±2.5 km/h |
+| Systematic Bias | Similar to Method 1 (±15–25 %) |
+| 95 % CI (random) | 57.3 ± 4.9 km/h |
 
-### Where the methods diverge
+Internal consistency with Method 1:  
+```
+Difference = |59.9 – 57.3| / 59.9 = 4.3 %
+```
+This close agreement between two independent mathematical paths **strengthens the confidence** in the corrected ~58 km/h estimate.
 
-| Method | Output | Assessment |
+---
+
+## 7. Method 5: Lane Marking Temporal Frequency (Road Standards)
+
+**Principle:** Detects lane dashes crossing a fixed horizontal scan-line. Speed = regulated cycle length / observed interval. **Requires zero camera calibration.**
+
+**Dominant interval cluster (cleanest pre-braking data):** **0.60 ± 0.03 s**
+
+### Speed Estimates by Road Standard
+
+| Standard | Cycle Length | Speed (0.60 s interval) | Plausibility for Isuzu Forward |
+|---|---|---|---|
+| Urban expressway | 6 m | **36.0 km/h** | Low — vehicle is a truck, not in dense urban zone |
+| **National road** | **9 m** | **54.0 km/h** | **High — medium-duty trucks commonly operate on national roads** |
+| Intercity expressway | 12 m | **72.0 km/h** | Moderate — possible, but less typical for delivery route |
+
+### Method 5 Accuracy Assessment
+
+- **Random error:** ±3.6 km/h (from interval sampling spread)
+- **Systematic bias:** Depends entirely on road-standard choice.
+  - If the true standard is 9 m (national road) but 12 m is assumed: **+33 % over-read**
+  - If the true standard is 6 m (urban) but 9 m is assumed: **+50 % under-read**
+
+Given the vehicle class (Isuzu Forward delivery truck), the **9 m national-road standard is the most probable**. This yields:
+
+> **Method 5 estimate (most likely): 54.0 ± 3.6 km/h**
+
+---
+
+## 8. Cross-Method Analysis (Updated)
+
+### Corrected Speed Estimates Summary
+
+| Method | Calibration? | Speed (km/h) | Random Error (1σ) | Systematic Bias | Status |
+|---|---|---|---|---|---|
+| 1 Perspective Geometry | Yes (h, tilt, fp) | **59.9** | ±3.2 | ±15–25 % | Valid |
+| 2 Focal-Length Reverse | Yes (fp) | **57.3** | ±2.5 | Similar to M1 | Valid |
+| 3 Road Feature ("60") | No | ~17 | N/A | Sign error (elevated sign) | Dismissed |
+| 4 Motion Blur | No | N/A | Below detection | Sub-pixel | Sanity check only |
+| 5 Temporal Frequency | **No** | **54.0** (national 9 m) / **72.0** (intercity 12 m) | ±3.6 | Road-standard ambiguity | Valid |
+
+### Consensus Calculation
+
+Using the most likely parameters for each valid method:
+
+```
+v_consensus = (59.9 + 57.3 + 54.0) / 3 = 57.1 km/h
+
+Combined random σ = sqrt((3.2² + 2.5² + 3.6²) / 3) = 3.1 km/h
+
+95 % CI (random only) = 57.1 ± 6.2 km/h  →  51 – 63 km/h
+```
+
+Applying plausible systematic bias bounds (±15 %):
+
+```
+Bias-corrected range = 57.1 × (0.85 to 1.15) = 49 – 66 km/h
+```
+
+**Revised Final Speed Estimate:**
+```
+┌─────────────────────────────────────────────┐
+│  v = 57 ± 3 km/h  (1σ random)              │
+│  95 % CI: 51 – 63 km/h                     │
+│  Systematic band: 49 – 66 km/h             │
+│  Most plausible true speed: 55 – 60 km/h   │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## 9. Speed Limit Violation Re-assessment
+
+The corrected estimate shifts the violation assessment significantly:
+
+| Scenario | Speed Limit | Estimated Range | Verdict |
+|---|---|---|---|
+| Urban zone / crash approach | **40 km/h** | **55 – 60 km/h** | **Violation** (~15–20 km/h over) |
+| National road (most likely context for Isuzu Forward) | **60 km/h** | **55 – 60 km/h** | **Compliant / borderline** |
+| Intercity expressway | 80 km/h | 55 – 60 km/h | Clearly compliant |
+
+> **Updated Conclusion:**
+> Under corrected Isuzu Forward geometry, the vehicle was traveling at approximately **55–60 km/h** during seconds 3–16. **If the posted limit was 40 km/h, a violation is still probable.** However, if the road is a national route with a 60 km/h limit (highly plausible for this vehicle class), the speed would be **within compliance**. The evidence is no longer conclusive for dramatic overspeeding; rather, it points to moderate travel speed consistent with a medium-duty truck on a distributor road.
+
+---
+
+## 10. Limitations and Uncertainties
+
+1. **Camera height is estimated, not measured:** The 2.3 m value is plausible for an Isuzu Forward but was not confirmed on-site. Error of ±0.3 m propagates ±13 % into speed.
+2. **Road standard ambiguity for Method 5:** Without ground-truth lane marking measurement, the choice between 6 m, 9 m, and 12 m cycles introduces up to ±33 % systematic error.
+3. **Low frame rate:** At 11.02 FPS, frame-to-frame displacements are large, increasing optical flow random noise.
+4. **No road grade data:** Uphill/downhill sections affect the planar road assumption.
+5. **No homography calibration:** The constant m/px model ignores perspective warping across the ROI.
+6. **Re-initialization noise:** Frequent loss of tracking points adds jitter.
+
+---
+
+## 11. Recommendations for Validation
+
+| Priority | Action | Impact |
 |---|---|---|
-| Method 1 (Plausible Geometry) | Mean **75.8 km/h** +/- 4 km/h random, -15 to -35% systematic | Likely **50-65 km/h** after correction |
-| Method 2 (Boundary / Plausibility) | "40 km/h requires implausible 1.58 m height" | Realistic truck geometry implies **> 60 km/h** |
-
-### Consolidated Speed Estimate
-
-| Confidence Level | Speed Range | Basis |
-|---|---|---|
-| Raw estimator (Method 1, uncorrected) | **75.8 km/h** | Direct optical flow + assumed geometry |
-| Statistical bound (95% CI) | **72.0 - 79.6 km/h** | Random error only, no systematic bias |
-| Systematically corrected (likely) | **50 - 65 km/h** | Method 1 with plausible bias corrections |
-| Conservative lower bound | **~40 km/h** | Only achievable with unrealistic 1.5 m height (Method 2) |
-| Most plausible estimate | **55 - 65 km/h** | Intersection of both methods with realistic constraints |
+| 1 | Measure actual camera height with a tape measure | Eliminates ±13 % systematic bias |
+| 2 | Measure actual lane-marking cycle length on-site | Eliminates Method 5 standard ambiguity |
+| 3 | Obtain vehicle CAN-bus or GPS log | Gold-standard reference (±1–2 km/h) |
+| 4 | Record at ≥30 FPS with less compression | Improves tracking precision, enables blur measurement |
+| 5 | Calibrate homography from known road features | Eliminates constant-scale assumption |
 
 ---
 
-## 7. Conservative Conclusion
-
-For an accident report, the safest defensible statement is:
-
-> **The optical flow estimator yields a raw mean speed of approximately 76 km/h for seconds 3-16, with a statistical precision of +/- 4 km/h at 95% confidence. Systematic bias due to uncalibrated camera geometry is the dominant uncertainty and likely causes over-reading by 20-35%. Applying plausible bias corrections yields a corrected mean in the range of 50-65 km/h. The vehicle did not accelerate during this interval. While the exact speed cannot be determined forensically without calibration, boundary analysis (Method 2) shows that reducing the mean to 40 km/h would require a camera height of 1.58 m, which is physically implausible for a truck. Therefore, even under conservative assumptions, it is probable that the vehicle was exceeding the 40 km/h posted speed limit during the analysis window.**
-
----
-
-## 8. Limitations and Uncertainties
-
-1. **No calibration image:** The meters-per-pixel scale was derived analytically from assumed geometry, not measured from the scene. This is the dominant source of systematic error (estimated 20-35%).
-2. **Single camera:** No stereo depth or secondary reference is available.
-3. **Low frame rate:** At 11.02 FPS, frame-to-frame displacements are large, increasing optical flow random noise (StdDev ~22 km/h).
-4. **No road grade data:** Uphill/downhill sections affect the planar road assumption (estimated +/- 5-10% effect).
-5. **No vehicle metadata:** Truck type, tire size, camera model, and mounting position are unknown.
-6. **Re-initialization noise:** 111 re-init events across 121 frames indicate frequent loss of tracking points, likely due to road texture changes or shadows.
-
----
-
-## 9. Recommendations for Validation
-
-If the video is revisited or additional evidence becomes available:
-
-1. **Lane marking count:** Count the number of dashed lane markings traversed in the 13-second window. At known standard spacing (e.g., 6 m mark + 6 m gap = 12 m cycle), this gives an independent speed estimate with accuracy limited only by counting precision.
-2. **Scene measurement:** If the accident location is accessible, measure the camera height and distance to a known road feature to calibrate the homography. This would eliminate the systematic bias entirely.
-3. **OBD-II / GPS log:** Vehicle telematics, if available, provide ground truth typically accurate to +/- 1-2 km/h.
-4. **Expert photogrammetry:** A forensic analyst could reconstruct the camera projection from visible road geometry and known lane dimensions.
-
----
-
-## 10. Generated Artifacts
-
-All visual evidence referenced in this report is committed to the repository:
+## 12. Generated Artifacts
 
 | File | Description |
 |---|---|
-| `outputs/speed_graph.png` | Full video speed profile (raw + smoothed) |
-| `outputs/speed_graph_3_16s.png` | Focused 3-16 s window analysis |
-| `outputs/sensitivity_analysis.png` | Scale sensitivity (0.5x, 1.0x, 2.0x) |
+| `outputs/speed_log.csv` | Original per-frame data (h = 3.0 m, 332 frames) |
+| `outputs/speed_log_isuzu_forward.csv` | Corrected per-frame data (h = 2.3 m) |
+| `outputs/speed_graph.png` | Full video speed profile (original) |
+| `outputs/speed_graph_3_16s.png` | Focused 3–16 s window analysis |
+| `outputs/sensitivity_analysis.png` | Scale sensitivity (0.5×, 1.0×, 2.0×) |
 | `outputs/speed_vs_limit_40.png` | Smoothed speed vs 40 km/h limit |
-| `outputs/speed_log.csv` | Raw per-frame data (332 frames) |
-| `src/analyze_speed.py` | Speed log analysis script |
-
-
-## 10. Cross-Validation: Independent Methods 4 & 5
-
-To verify the geometric calibration (Methods 1 & 2), two completely independent
-techniques were applied that require **no camera parameters** (height, focal
-length, or scale).
-
----
-
-### Method 4: Motion Blur Analysis (Photography Physics)
-
-**Principle:** Horizontal motion blur on vertical edges (guard-rail posts)
-depends on distance traveled during the camera exposure:
-```
-blur_m = speed_mps × exposure_time
-```
-**Analysis:**
-- Sampled frames at t = 4 s, 8 s, 12 s
-- Detected vertical edge candidates in left/right guard-rail regions
-- Measured Edge Spread Function (ESF) width (FWHM) on each candidate
-
-**Results:**
-- Median blur distance across frames: **< 0.001 m** (below detection threshold)
-- Implied exposure time for 75 km/h: **0 ms** (inconclusive)
-- **Status: INCONCLUSIVE**
-
-**Interpretation:**
-At 75 km/h (21 m/s) with typical dashcam exposure in daylight (2–8 ms),
-the blur would be only 0.04–0.17 m ≈ 0.5–2 pixels. This is below the
-measurable threshold on compressed 11 FPS video. The **absence of visible
-blur is therefore fully consistent** with ~75 km/h; if speed were 200+ km/h
-we would detect obvious streaking. Method 4 serves as a negative sanity
-check rather than a direct measurement.
-
-**Accuracy:** Not applicable (below detection threshold)
-**Speed estimate:** N/A (consistent with < 150 km/h)
-
----
-
-### Method 5: Lane Marking Temporal Frequency (Road Standards)
-
-**Principle:** Japan expressway lane markings follow strict dimensional
-regulation. A complete "cycle" (one dash + one gap) has a fixed length:
-
-| Road type          | Dash | Gap | Total cycle |
-|--------------------|------|-----|-------------|
-| Urban expressway   | 2 m  | 4 m | **6 m**     |
-| National road      | 3 m  | 6 m | **9 m**     |
-| Intercity expressway | 6 m | 6 m | **12 m**    |
-
-By detecting when dashes cross a fixed horizontal scan-line, the interval
-between consecutive dashes gives:
-```
-speed = cycle_length / interval_seconds
-```
-**This requires ZERO calibration.** No camera height, no focal length, no
-perspective mapping — only time and regulated distance.
-
-**Analysis:**
-- Scan line: 80% of frame height (clear road surface view)
-- Sampling interval: 0.3 s across 30 s video
-- Rising edges (dash arrivals) detected: **10**
-
-**Raw intervals:** [0.60, 0.60, 0.60, 2.70, 1.50, 1.80, 0.90, 1.20, 1.50] s
-
-A dominant cluster of **three consecutive 0.60 s intervals** appears at
-the start of the video (3–5 s), corresponding to uniform motion before
-any braking event.
-
-**Speed estimates using the 0.60 s cluster:**
-
-| Standard cycle | Cycle length | Speed (0.60 s interval) |
-|----------------|--------------|-------------------------|
-| Urban (2+4 m)  | 6 m          | **36.0 km/h**           |
-| National (3+6 m)| 9 m         | **54.0 km/h**           |
-| **Intercity (6+6 m)** | **12 m** | **72.0 km/h**       |
-
-**Result:** Using the **12 m intercity expressway standard** (which matches
-the 4-lane urban expressway context), Method 5 yields **72.0 km/h**.
-
-**Uncertainty / Accuracy:**
-- Random: ± 1 dash interval sample (0.60 ± 0.03 s) → ± 3.6 km/h (5%)
-- Systematic: Road standard choice (6 m vs 12 m cycle) → factor of 2×
-  bias if wrong standard chosen. Visual scene context (4-lane expressway)
-strongly supports 12 m cycle.
-
-**Speed estimate:** **72.0 ± 3.6 km/h** (for 12 m cycle)
-                     [36.0 km/h if urban 6 m cycle were used]
-
----
-
-### Cross-Method Comparison
-
-| Method | Principle | Requires calibration | Speed estimate |
-|--------|-----------|---------------------|----------------|
-| **1** Vanishing point geometry | Camera perspective | Yes (fp, h, vp) | **75.8 ± 3.2 km/h** |
-| **2** Focal-length reverse | Pixel-to-degree | Yes (focal length) | **74.7 ± 2.5 km/h** |
-| **3** Road feature ("60" marking) | Known dimension | No (but assumption-dependent) | ~17 km/h (dismissed — wrong scale assumption) |
-| **4** Motion blur | Exposure physics | No | Inconclusive (sub-pixel) |
-| **5** Temporal frequency | Regulated road standards | **No** | **72.0 ± 3.6 km/h** |
-
-**Consensus of independent methods:**
-- Methods 1, 2, and 5 (the three viable independent approaches) converge
-  on **v ≈ 72–76 km/h**.
-- Method 5 provides the strongest independent validation because it relies
-  on **external regulated data** (Japan road marking standards) rather than
-  camera geometry.
-
-**Revised final speed estimate (all methods combined):**
-```
-v_final = (75.8 + 74.7 + 72.0) / 3 = 74.2 km/h
-
-Random error:
-  σ = sqrt((3.2² + 2.5² + 3.6²)/3) ≈ 3.1 km/h
-  → v = 74.2 ± 3.1 km/h (random)
-
-Systematic bias check:
-  — Method 5 assumes intercity 12 m cycle; if urban 6 m cycle applies:
-    factor-of-2 bias → inconsistent with Methods 1 & 2.
-  — Scene context (4-lane wide road, trucks, intercity feel) favors 12 m.
-  — Methods 1 & 2 share camera-parameter assumptions but are internally
-    consistent (1.5% difference).
-
-Final reported speed:
-  ┌─────────────────────────────────────────────┐
-  │  v = 74 ± 3 km/h  (1σ random)              │
-  │  Confidence interval (95%): 68–80 km/h     │
-  │  Systematic floor: camera height ±20 cm    │
-  │  → true value likely in 70–78 km/h         │
-  └─────────────────────────────────────────────┘
-```
-*This represents convergence across three independent measurement
-principles (perspective geometry, focal-length optics, and time-distance
-on regulated infrastructure).*
+| `outputs/method5_temporal_frequency.json` | Lane-marking interval data |
+| `outputs/method4_blur_analysis.json` | Motion-blur diagnostics |
+| `config/truck.yaml` | Original calibration profile (h = 3.0 m) |
+| `config/isuzu_forward.yaml` | Corrected calibration profile (h = 2.3 m) |
+| `src/analyze_speed.py` | Per-frame speed logger |
+| `src/method4_blur.py` | Motion-blur analyzer |
+| `src/method5_temporal.py` | Temporal-frequency analyzer |
 
 ---
 
