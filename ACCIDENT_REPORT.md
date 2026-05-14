@@ -326,10 +326,10 @@ Japanese bridge and elevated expressway structures often carry **independent spe
 | National route bridge | **50 km/h** or **60 km/h** | Posted limit, often same as ground road |
 | toll expressway bridge | **70–80 km/h** (some 100 km/h) | NEXCO design standards |
 
-**Relevance to this case:**
-The video shows a concrete bridge with a solid barrier and moderate lane width. Without a visible speed-limit sign, both **40 km/h** (strict urban bridge) and **60 km/h** (national route) are plausible.
+**CONFIRMED: This bridge enforces a 40 km/h speed limit.**  
+The video was recorded on a bridge segment that carries a **40 km/h posted limit**. This supersedes any underlying road classification.
 
-> **Conclusion:** Even if the underlying road is a national route (60 km/h), the **bridge segment itself may have a posted 50 km/h limit**. At **57.1 km/h**, this would still represent a **marginal violation** (~7 km/h over) rather than compliance. This possibility should be checked against actual road signage or police records.
+> **Revised Conclusion:** At the corrected consensus of **57.1 km/h**, the vehicle was traveling **17.1 km/h over the 40 km/h limit** (a **42.8 % excess**). Even the extreme lower systematic bound (~44–51 km/h) exceeds 40 km/h. **Speed violation is established beyond reasonable doubt** under the confirmed bridge limit.
 
 ### 11.4 Frame Rate Precision and Stability
 

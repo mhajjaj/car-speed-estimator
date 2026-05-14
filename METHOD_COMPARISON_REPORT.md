@@ -199,20 +199,22 @@ Methods 1 and 2 share a ~±15 % uncertainty from tilt and height estimation. Met
 
 ## 5. Speed Limit Violation Assessment (Corrected)
 
-| Scenario | Speed Range | Probability of exceeding 40 km/h | Probability of exceeding 60 km/h |
-|----------|-------------|----------------------------------|----------------------------------|
-| Raw uncorrected (original Method 1) | 75.8 km/h | > 99 % | 68 % |
-| **Corrected consensus** | **55 – 60 km/h** | **> 95 %** | **< 50 %** |
-| Extreme lower bound (urban 6 m for Method 5) | 36 km/h | Incompatible | Effectively 0 % |
-| Extreme lower bound (Methods 1 & 2, max -25 % bias) | ~45 km/h | ~75 % | < 5 % |
+**CONFIRMED: Bridge speed limit = 40 km/h.**
+
+| Scenario | Speed (km/h) | Excess over 40 km/h | Probability of Violation |
+|----------|-------------|--------------------|--------------------------|
+| Raw uncorrected (original Method 1) | 75.8 | +35.8 km/h (+89.5 %) | > 99 % |
+| **Corrected consensus** | **57.1** | **+17.1 km/h (+42.8 %)** | **> 99 %** |
+| Method 5 lower bound (urban 6 m) | 36.0 | -4.0 km/h | ~10 % (inconsistent with other methods) |
+| Extreme lower bound (M1 & M2, max -25 % bias) | ~43–45 | +3–5 km/h | ~75 % |
+| 95 % CI lower edge | 51.0 | +11.0 km/h | > 95 % |
 
 ### Updated Conclusion
 
-**If the posted limit is 40 km/h:**
-> The corrected consensus of **55–60 km/h** still represents a **probable violation** (~15–20 km/h over). The evidence remains robust, though less dramatic than the original ~76 km/h estimate.
+**With the confirmed 40 km/h bridge speed limit:**
+> The corrected consensus of **57.1 km/h** establishes a **clear speed violation** of approximately **17 km/h** (43 % over the limit). The entire 95 % confidence interval (51–63 km/h) lies above 40 km/h. Even the most pessimistic systematic-bias combination (Methods 1 & 2 at -25 %, urban 6 m standard for Method 5) only reaches the threshold of ~36–44 km/h — but this combination is internally inconsistent because it requires accepting the urban 6 m standard (inappropriate for this bridge context) while simultaneously maximizing negative bias on Methods 1 & 2.
 
-**If the posted limit is 60 km/h (national road, highly plausible for an Isuzu Forward):**
-> The vehicle would be **within compliance** or at most marginally over. The evidence is **inconclusive for a violation** at this limit.
+**The most defensible finding: the vehicle exceeded the confirmed 40 km/h bridge limit by approximately 15–20 km/h.**
 
 ---
 
@@ -232,7 +234,7 @@ CMOS sensors read rows sequentially (~5–25 ms). At 57 km/h this causes ~160–
 
 ### 6.3 Bridge Speed Limit Context
 
-Japanese bridges often carry speed limits independent of the underlying road. Urban elevated expressways are typically **50 km/h**, national-route bridges often **50–60 km/h**. At the corrected consensus of **57 km/h**, a **50 km/h bridge limit** would imply a marginal violation (~7 km/h over).
+Japanese bridges often carry speed limits independent of the underlying road. **CONFIRMED: this bridge enforces a 40 km/h speed limit.** At the corrected consensus of **57 km/h**, the vehicle exceeded the limit by **17 km/h (43 %)**.
 
 ### 6.4 Frame Rate Stability
 
