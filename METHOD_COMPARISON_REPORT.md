@@ -51,7 +51,7 @@ Systematic errors shift all readings in the same direction and do not average ou
 |--------|-----------------|-----------|-----------|------------|
 | Camera height ±0.3 m (Isuzu range 2.0–2.5 m) | 1, 2 | Linear scale | **±13 %** | Method 5 is immune |
 | Tilt angle ±3° | 1, 2 | Non-linear | ±15–20 % | Method 5 is immune |
-| Road grade (up/down hill) | 1, 2, 5 | Under/over read | ±5–10 % | Scene appears flat |
+| Road grade / bridge slope | 1, 2, 5 | Under/over read (horizontal vs road speed) | **< 0.5 %** for typical grades | Evaluated in Section 10 of accident report; negligible for this bridge |
 | Road-standard mis-identification (Method 5) | 5 | Factor 2× if urban 6 m used | +100 % / –50 % | Isuzu context favors **9 m national** |
 | Optical-flow outliers | 1 | Over-read | 0–10 % | Median filter applied |
 
