@@ -1,0 +1,66 @@
+{
+  "method": "Motion Blur Analysis (Method 4)",
+  "description": "Measures horizontal edge-spread-function (ESF) width on vertical structures (guardrail posts, barriers). Motion blur length indicates distance travelled during camera exposure. For a plausible exposure time, the blur length must be consistent with vehicle speed.",
+  "scale_m_per_px": 0.079,
+  "video_fps": 11.026515997789353,
+  "speed_to_check_kmh": 75.8,
+  "speed_to_check_mps": 21.055555555555554,
+  "frames_analyzed": [
+    {
+      "frame": 44,
+      "num_edges": 401,
+      "fwhm_pixels_mean": 3.686640831003165,
+      "fwhm_pixels_std": 5.275079903417996,
+      "fwhm_pixels_median": 0.0,
+      "fwhm_pixels_p10": -0.6536865234375,
+      "fwhm_pixels_p90": 11.950492858886719,
+      "blur_m_mean": 0.2912446256492501,
+      "blur_m_std": 0.4167313123700217,
+      "blur_m_median": 0.0,
+      "timestamp_s": 4.0,
+      "implied_exposure_s_for_75kmh": null,
+      "implied_exposure_ms": null
+    },
+    {
+      "frame": 88,
+      "num_edges": 391,
+      "fwhm_pixels_mean": 4.001397976180172,
+      "fwhm_pixels_std": 5.658700991013169,
+      "fwhm_pixels_median": 0.0,
+      "fwhm_pixels_p10": -0.7415227890014648,
+      "fwhm_pixels_p90": 12.942111015319824,
+      "blur_m_mean": 0.3161104401182335,
+      "blur_m_std": 0.4470373782900403,
+      "blur_m_median": 0.0,
+      "timestamp_s": 8.0,
+      "implied_exposure_s_for_75kmh": null,
+      "implied_exposure_ms": null
+    },
+    {
+      "frame": 132,
+      "num_edges": 412,
+      "fwhm_pixels_mean": 4.243871912794206,
+      "fwhm_pixels_std": 5.52456021643815,
+      "fwhm_pixels_median": 0.0,
+      "fwhm_pixels_p10": -0.7834027290344239,
+      "fwhm_pixels_p90": 12.508851718902596,
+      "blur_m_mean": 0.33526588111074224,
+      "blur_m_std": 0.43644025709861384,
+      "blur_m_median": 0.0,
+      "timestamp_s": 12.0,
+      "implied_exposure_s_for_75kmh": null,
+      "implied_exposure_ms": null
+    }
+  ],
+  "summary": {
+    "median_blur_m_across_frames": 0.0,
+    "mean_blur_m_across_frames": 0.0,
+    "implied_exposure_ms_median": NaN,
+    "implied_exposure_ms_mean": NaN,
+    "plausible_dashcam_exposure_range_ms": [
+      1.0,
+      16.7
+    ],
+    "exposure_consistent_with_75kmh": false
+  }
+}
