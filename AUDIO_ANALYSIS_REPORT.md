@@ -19,7 +19,7 @@
 
 > **The driver was actively speaking throughout the time the vehicle was speeding on the bridge (t = 3–16 s).**
 
-The audio consists of **six distinct speech segments**, all spoken by the **same voice** (the driver). There is no evidence of a phone call, second passenger, or Bluetooth conversation — the audio is consistent with **self-directed speech or speaking to a passenger** while driving.
+The audio consists of **six distinct speech segments**, all spoken by the **same voice** (the driver). 
 
 ---
 
@@ -60,17 +60,17 @@ Timeline:
 ## 5. Interpretation for Insurance/Liability
 
 ### 5.1 What This Shows
-1. **Divided attention:** The driver was cognitively engaged in a monologue (or passenger conversation) while navigating a speed-restricted bridge.
+1. **Divided attention:** The driver was cognitively engaged in speech while navigating a speed-restricted bridge.
 2. **Self-admitted stress/pressure:** Speech content reveals the driver felt "tight on schedule" and had a long workday ahead — a possible contributing factor to speeding (time pressure/rushing).
 3. **Situational awareness:** The "What's that guy doing?" comment (19–21 s) shows the driver WAS observing other traffic, but primarily AFTER exiting the bridge.
 
 ### 5.2 What This Does NOT Show
-- **No phone call:** The audio is mono, single-speaker, with no call-setup tones, ringback, or second-party audio. There is no evidence the driver was on a mobile phone.
-- **No hands-free system:** No Bluetooth connection audio, no call-hold music, no voice assistant chimes.
+- **No second passenger visible:** Video frames show only the driver; no front-seat passenger is seen.
+- **Definitive phone call status:** A hands-free or earbud call cannot be ruled out from audio alone. Only the driver's side of a call would be recorded by a dashboard microphone.
 - **No mechanical defect sounds:** Engine, road noise, and speech are the only audible elements.
 
 ### 5.3 Appropriate Conclusion for Legal/Insurance Use
-> "Audio analysis reveals the driver was actively speaking (self-directed or to a passenger) throughout the period of the alleged speed violation. The driver expressed work-related time pressure. This demonstrates divided cognitive attention at the time of the offense, consistent with inattentive or distracted driving behavior."
+> "Audio analysis reveals the driver was actively speaking throughout the period of the alleged speed violation. The target of the speech (self-talk, passenger, or phone call) is unknown. The driver expressed work-related time pressure. This demonstrates divided cognitive attention at the time of the offense, consistent with inattentive or distracted driving behavior."
 
 ---
 

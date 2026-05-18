@@ -18,8 +18,8 @@ Analysis of dashcam footage from an Isuzu Forward truck was conducted to determi
 **Key Findings:**
 - Speed during the bridge crossing: **consensus 54–60 km/h** (mean ~57 km/h), confirmed by three independent methods. **Exceeds the 40 km/h limit by ~17 km/h (+43%).**
 - The driver was **audibly speaking during 92% of the critical speeding window** (seconds 3–16).
-- Speech content consists of **self-directed monologue** (stress venting about schedule pressure) with later segments (post-incident) showing directed social phrases.
-- **No evidence of a phone call** was detected, though a one-sided Bluetooth hands-free conversation cannot be absolutely ruled out.
+- Speech content consists of **self-directed speech** (stress venting about schedule pressure) with later segments (post-incident) showing directed social phrases.
+- A hands-free or earbud phone call cannot be ruled out from audio alone; the target of the speech is unknown.
 - Cabin was confirmed to contain **only the driver** (verified manually; not inferable from audio alone).
 
 ---
@@ -77,25 +77,16 @@ The truck was identified as an **Isuzu Forward** medium-duty commercial truck. T
 | 5 | 24.0 – 25.0 s | ちょっと待ってください。 | "Please wait a moment." | Directed outward |
 | 6 | 30.0 – 32.0 s | おはようございます。 | "Good morning." | Directed outward |
 
-### 3.2 Assessment: Self-Talk vs. Phone Call
+### 3.2 Assessment: Speech Target
 
-**Evidence FOR self-talk (segments 1–3):**
-- "僕だけかわからんけど" is internal-processing language ("I don't know if it's just me")
-- Complaining about work schedule pressure — typical driver self-talk
-- Zero conversational acknowledgments ("うん", "そうだね", "本当？")
-- No pauses for response; continuous monologue flow
+The audio contains **only the driver's voice**. What we cannot determine from mono dashcam audio alone is whether the driver is:
+- Speaking to himself (thinking aloud / self-directed speech)
+- Speaking to a passenger (but none is visible in the video)
+- Engaged in a one-sided hands-free or earbud phone call (only his side would be recorded)
 
-**Evidence AGAINST phone call:**
-- Single-speaker audio with no second-party voice
-- No call-setup tones, ringback, or Bluetooth connection audio
-- Absence of back-and-forth conversation pattern
-
-**Ambiguous (segments 4–6):**
-- "おはようございます" x2 and "ちょっと待ってください" are socially directed
-- Most likely addressed to **someone outside the vehicle at a destination** (delivery site)
-- Occur **after** the critical speeding window (post-16 s)
-
-**Conclusion:** Early segments (0–21 s, covering the speeding incident) are consistent with **self-directed monologue**. Segments 4–6 are directed outward but occur after the incident window and likely relate to a delivery stop. A phone call cannot be absolutely ruled out, but there is **no affirmative evidence of one**.
+**Observations:**
+- The early segments (0–15 s, covering the speeding incident) have a continuous, uninterrupted flow with no pauses for response. This is more consistent with self-talk than a phone call.
+- Segments 4–6 contain socially directed phrases ("Good morning," "Please wait"), but they occur **after** the critical speeding window (post-16 s). These could be addressed to someone at a delivery site.
 
 ### 3.3 Implication for Distracted Driving
 
