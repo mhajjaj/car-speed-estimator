@@ -17,6 +17,8 @@ outputs/*.mp4
 outputs/*.avi
 outputs/*.mkv
 outputs/*.mov
+outputs/*.wav
+outputs/*.csv
 
 # User uploaded videos
 videos/*.mp4
