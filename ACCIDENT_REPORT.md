@@ -378,9 +378,13 @@ v(h) = v_base x (h / h_base)
 | Family car (sedan) | 1.2 | 29.8 | No (below 40) |
 | Compact van | 1.8 | 44.7 | Marginal (+4.7) |
 | **Isuzu Forward (this vehicle)** | **2.3** | **57.1** | **Yes (+17.1)** |
+| Isuzu Forward (top of windshield) | **2.6** | **~65** | **Yes (+25)** |
+| Isuzu Forward (roof-mounted) | **2.9** | **~72** | **Yes (+32)** |
 | Semi-truck (generic) | 3.0 | 74.5 | Yes (+34.5) |
 
-> **Conclusion:** Only if the camera were mounted below **1.74 m** (impossible for any commercial truck) would the speed estimate drop to 40 km/h. The Isuzu Forward height of 2.3 m is well-established and makes the violation finding robust.
+> **Note on height uncertainty:** The 2.3 m value assumes a mid-windshield mount typical for the Isuzu Forward cab. If the dashcam is mounted higher — e.g., at the top of the windshield (~2.6 m) or on the roof (~2.9 m) — the true speed scales linearly upward to approximately **65 km/h** or **72 km/h** respectively. The user will confirm the exact mounting position.
+
+> **Conclusion:** Only if the camera were mounted below **1.74 m** (impossible for any commercial truck) would the speed estimate drop to 40 km/h. The Isuzu Forward height of 2.3 m is well-established and makes the violation finding robust. *Camera height is the single largest remaining uncertainty; confirmation of the exact mount point will tighten the estimate significantly.*
 
 ### 13.2 Tilt Angle Sensitivity
 
