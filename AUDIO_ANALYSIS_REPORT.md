@@ -17,7 +17,7 @@
 
 ## 2. Key Finding
 
-> **The driver was actively speaking throughout the time the vehicle was speeding on the bridge (t = 3–16 s).**
+> **The driver was actively speaking throughout the period the vehicle was speeding on the bridge (t = 3–16 s).**
 
 The audio consists of **six distinct speech segments**, all spoken by the **same voice** (the driver). 
 
@@ -27,12 +27,12 @@ The audio consists of **six distinct speech segments**, all spoken by the **same
 
 | Segment | Time | Japanese (original) | English Translation | Context |
 |---|---|---|---|---|
-| 1 | 0.0 – 7.0 s | 僕だけかわからんけど、結構カツカツまでつけられてますわ。 | "I don't know if it's just me, but it's getting pretty tight/close to the wire." | Expressing work pressure or schedule stress |
-| 2 | 8.0 – 15.0 s | ほんまに、僕、2時間、2時間プラプラペから10時間で終わりっぽいって。 | "Seriously, for me, from about 2 hours of messing around, it looks like it'll end up being 10 hours." | Discussing work schedule / overtime |
+| 1 | 0.0 – 7.0 s | 僕だけかわからんけど、結構カツカツまでつけられてますわ。 | "I don't know if it's just me, but it's getting pretty tight/close to the wire." | Expressing work schedule pressure |
+| 2 | 8.0 – 15.0 s | ほんまに、僕、2時間、2時間プラプラペから10時間で終わりっぽいって。 | "Seriously, for me, from about 2 hours of messing around, it looks like it'll end up being 10 hours." | Complaining about a long workday ahead |
 | 3 | 19.0 – 21.0 s | 何してんの、あいつ。 | "What's that guy doing?" | Reacting to another road user |
-| 4 | 23.0 – 24.0 s | おはようございます。 | "Good morning." | Greeting (possibly to someone off-camera or arriving at destination) |
-| 5 | 24.0 – 25.0 s | ちょっと待ってください。 | "Please wait a moment." | Urging patience |
-| 6 | 30.0 – 32.0 s | おはようございます。 | "Good morning." | Repeated greeting |
+| 4 | 23.0 – 24.0 s | おはようございます。 | "Good morning." | Greeting — directed outward, no passenger visible |
+| 5 | 24.0 – 25.0 s | ちょっと待ってください。 | "Please wait a moment." | Urging patience — directed outward, no passenger visible |
+| 6 | 30.0 – 32.0 s | おはようございます。 | "Good morning." | Repeated greeting after event |
 
 ---
 
@@ -61,16 +61,31 @@ Timeline:
 
 ### 5.1 What This Shows
 1. **Divided attention:** The driver was cognitively engaged in speech while navigating a speed-restricted bridge.
-2. **Self-admitted stress/pressure:** Speech content reveals the driver felt "tight on schedule" and had a long workday ahead — a possible contributing factor to speeding (time pressure/rushing).
-3. **Situational awareness:** The "What's that guy doing?" comment (19–21 s) shows the driver WAS observing other traffic, but primarily AFTER exiting the bridge.
+2. **Time-pressure-induced speeding:** Speech content reveals the driver felt behind schedule ("tight/close to the wire," long workday ahead). This is a known behavioral contributor to exceeding speed limits.
+3. **Situational awareness:** The "What's that guy doing?" comment (19–21 s) shows the driver observed other traffic, but primarily AFTER exiting the bridge.
 
-### 5.2 What This Does NOT Show
-- **No second passenger visible:** Video frames show only the driver; no front-seat passenger is seen.
-- **Definitive phone call status:** A hands-free or earbud call cannot be ruled out from audio alone. Only the driver's side of a call would be recorded by a dashboard microphone.
-- **No mechanical defect sounds:** Engine, road noise, and speech are the only audible elements.
+### 5.2 Target of Speech — Assessment
 
-### 5.3 Appropriate Conclusion for Legal/Insurance Use
-> "Audio analysis reveals the driver was actively speaking throughout the period of the alleged speed violation. The target of the speech (self-talk, passenger, or phone call) is unknown. The driver expressed work-related time pressure. This demonstrates divided cognitive attention at the time of the offense, consistent with inattentive or distracted driving behavior."
+| Segment | Classification | Basis |
+|---|---|---|
+| 1–2 (0–15 s) | Self-directed speech | Monologue complaining about own schedule; continuous flow with no gaps for response; no visible addressee |
+| 3 (19–21 s) | Self-directed / reacting to traffic | Road observation, likely thinking aloud |
+| 4–6 (23–32 s) | **Directed outward — likely phone call** | Social greeting and request for patience addressed to someone; **no passenger visible in cabin**; driver seen holding phone immediately upon exiting truck post-incident |
+
+### 5.3 Phone Use Evidence
+
+**What the video shows:**
+- **During driving (0–16 s):** No phone visible in driver's hands; no headset, earbuds, or Bluetooth device visible.
+- **Post-incident (after cabin exit):** Driver exits vehicle with phone in hand.
+
+**Inference:** The phone was present in the cabin during the entire event. A hands-free Bluetooth or speakerphone call during segments 4–6 (23–25 s) is the most probable explanation for directed social speech with no visible passenger.
+
+**Note:** Whether a hands-free call was active during the critical speeding window (0–15 s) is **unresolved**. Only self-directed monologue occurs in that window.
+
+### 5.4 Appropriate Conclusion for Legal/Insurance Use
+> "Audio analysis reveals the driver was actively speaking throughout the period of the alleged speed violation (segments 1–2, 0–15 s). The content indicates work-related time pressure, a recognized factor in speeding behavior.  
+>  
+> Later speech segments (23–25 s) contain socially directed phrases ('Good morning,' 'Please wait') with no passenger visible in the cabin. The driver was observed holding a phone immediately after exiting the vehicle. A hands-free phone call during these later segments is the most probable explanation. Whether a hands-free call was ongoing during the earlier speeding window (0–15 s) cannot be determined from the footage."
 
 ---
 
@@ -90,7 +105,7 @@ Timeline:
 
 1. **Translation accuracy:** The English translations are approximate. For legal use, a certified Japanese translator should review the original transcriptions.
 2. **Speaker identification:** Whisper does not perform speaker diarization. We infer a single speaker (the driver) based on mono audio and lack of overlapping voices. This is reasonable but not provable from audio alone.
-3. **No phone-vs-passenger distinction:** We cannot definitively distinguish between "talking to self," "talking to front-seat passenger," or "one-sided hands-free call where only driver audio is captured." The absence of call-setup audio makes a phone call unlikely but not impossible.
+3. **No hands-free device audio:** A Bluetooth call with no audible ringtone, connection tone, or second voice leaves no acoustic signature on a single-channel dashcam microphone. Presence/absence of a call during 0–15 s therefore cannot be determined.
 4. **Privacy:** The audio contains personal speech content. This analysis is restricted to the insurance claim context. Distribution beyond that context may require consent.
 
 ---
